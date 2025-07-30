@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // this above line is being written to direct the use of node interpreter to execute this file
 
-const arg = require("arg");
+import arg from "arg";
+import chalk from "chalk";
 
 try {
   const args = arg({
@@ -9,16 +10,16 @@ try {
     "--start": Boolean,
     "--fun": String,
   });
-  if (args["--start"]) console.log("Starting app");
+  if (args["--start"]) console.log(chalk.bgCyanBright("Starting app"));
 } catch (error) {
-  console.log(error.message);
+  console.log(chalk.yellow(error.message));
   console.log();
   usage();
 }
 
 function usage() {
   // function that tells the user how to use the command line tool
-  console.log(`tool [CMD]
-    --start\tStarts the app
-    --fun\tSome string input`);
+  console.log(`${chalk.whiteBright("tool [CMD]")}
+    ${chalk.greenBright("--start")}\tStarts the app
+    ${chalk.greenBright("--fun")}\tSome string input`);
 }

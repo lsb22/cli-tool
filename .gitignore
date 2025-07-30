@@ -1,0 +1,4 @@
+node_modules/
+./testProject/node_modules/
+./tool/node_modules/
+.env

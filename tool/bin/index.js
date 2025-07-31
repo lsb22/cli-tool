@@ -3,6 +3,8 @@
 
 import arg from "arg";
 import chalk from "chalk";
+import { readFileSync } from "fs";
+import { packageUp } from "package-up";
 
 try {
   const args = arg({
@@ -10,7 +12,19 @@ try {
     "--start": Boolean,
     "--fun": String,
   });
-  if (args["--start"]) console.log(chalk.bgCyanBright("Starting app"));
+  if (args["--start"]) {
+    async function fun() {
+      const path = await packageUp(); // fetches path of package.json
+      const file = JSON.parse(readFileSync(path, "utf8")); // for fetching the file synchronously
+      if (file.tool) {
+        console.log(
+          chalk.bgGreen("configuration found", JSON.stringify(file.tool))
+        );
+      } else console.log(chalk.bgRed("configuration not found"));
+    }
+    fun();
+    console.log(chalk.bgCyanBright("Starting app"));
+  }
 } catch (error) {
   console.log(chalk.yellow(error.message));
   console.log();

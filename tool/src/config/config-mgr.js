@@ -1,18 +1,26 @@
 import chalk from "chalk";
-import { readFileSync } from "fs";
-import { packageUp } from "package-up";
+// import { readFileSync } from "fs";
+// import { packageUp } from "package-up";
+import { cosmiconfigSync } from "cosmiconfig";
 
 function getConfig() {
   return new Promise((resolve, reject) => {
     try {
       async function findConfig() {
-        const path = await packageUp(); // fetches path of package.json
-        const file = JSON.parse(readFileSync(path, "utf8")); // for fetching the file synchronously
-        if (file.tool) {
+        // const path = await packageUp(); // fetches path of package.json
+        // const file = JSON.parse(readFileSync(path, "utf8")); // for fetching the file synchronously
+        const configLoader = cosmiconfigSync("tool");
+        // creates an explorer to look for a property, like "tool" in package.json, if not found,
+        // looks for files with extensions -> .toolrc (and .toolrc.json, .toolrc.yaml, etc.),
+        // if not found then looks for files like tool.config.js or tool.config.cjs
+        const result = configLoader.search(process.cwd());
+        // tells the explorer to being search from current working directory
+        // result will be stored in result.config
+        if (result) {
           console.log(
-            chalk.bgGreen("configuration found", JSON.stringify(file.tool))
+            chalk.bgGreen("configuration found", JSON.stringify(result.config))
           );
-          resolve(file.tool);
+          resolve(result.config);
         } else {
           console.log(
             chalk.bgRed("configuration not found, using default configuration")

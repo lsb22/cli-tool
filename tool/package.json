@@ -17,6 +17,7 @@
     "better-ajv-errors": "^2.0.2",
     "chalk": "^5.4.1",
     "cosmiconfig": "^9.0.0",
+    "debug": "^4.4.1",
     "package-up": "^5.0.0"
   }
 }

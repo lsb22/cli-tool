@@ -1,8 +1,11 @@
-import chalk from "chalk";
+import logger from "../logger.js";
+
+const log = logger("start");
 
 const start = (config) => {
-  console.log(chalk.bgGreen("Starting the app"));
-  console.log(chalk.blue("Received configuration", JSON.stringify(config)));
+  log.highlight("Starting the app");
+  log.debug("Received configuration", JSON.stringify(config));
+  // this will be shown only when the environment variable DEBUG=start or DEBUG=*
 };
 
 export default start;

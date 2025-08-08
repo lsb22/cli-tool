@@ -1,5 +1,5 @@
 const configuationObject = {
-  port: "1800",
+  port: 1800,
 };
 
 export default configuationObject;

@@ -5,6 +5,9 @@ import arg from "arg";
 import chalk from "chalk";
 import start from "../src/commands/start.js";
 import getConfig from "../src/config/config-mgr.js";
+import logger from "../src/logger.js";
+
+const log = logger("bin");
 
 try {
   const args = arg({
@@ -12,6 +15,11 @@ try {
     "--start": Boolean,
     "--fun": String,
   });
+
+  log.debug("Received args", args);
+  // this will be shown only when the environment variable DEBUG=bin or DEBUG=*
+  // command to set env in power shell -> $env:DEBUG='value'
+
   if (args["--start"]) {
     async function findConfig() {
       const config = await getConfig();
@@ -20,7 +28,8 @@ try {
     findConfig();
   }
 } catch (error) {
-  console.log(chalk.yellow(error.message));
+  // console.log(chalk.yellow(error.message));
+  log.warning(error.message);
   console.log();
   usage();
 }

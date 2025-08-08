@@ -28,7 +28,6 @@ try {
     findConfig();
   }
 } catch (error) {
-  // console.log(chalk.yellow(error.message));
   log.warning(error.message);
   console.log();
   usage();

@@ -27,21 +27,14 @@ function getConfig() {
           const isValid = validate(data); // validates data with the given schema
           if (!isValid) {
             const output = betterAjvErrors(schema, data, validate.errors);
-            // console.log(chalk.redBright("Invalid configuration"));
             log.warning("Invalid configuration");
             console.log(output);
             process.exit(1);
           }
-          // console.log(
-          //   chalk.bgGreen("configuration found", JSON.stringify(data))
-          // );
           log.debug("configuration found", JSON.stringify(data));
           // this will be shown only when the environment variable DEBUG=config:mgr or DEBUG=*
           resolve(data);
         } else {
-          // console.log(
-          //   chalk.bgRed("configuration not found, using default configuration")
-          // );
           log.warning("configuration not found, using default configuration");
           resolve({ port: 3000 });
         }
